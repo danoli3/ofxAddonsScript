@@ -23,7 +23,22 @@
 # SOFTWARE.
 
 echo "----------------------------------"
-echo "ofxAddonScript v1.1 (OSX Edition)."
+echo "ofxAddonScript v1.2 (OSX Edition)."
+echo "----------------------------------"
+
+
+
+# Global Variables (only addons path at the moment)
+# Variable: relativeaddonpath - Make this the relative location to addons folder
+# Default: "../../addons" however this very likely could be "../../../addons/"
+# ---------------------------------------------------------------------------------
+relativeaddonpath="../../addons"      # normal oF addons->addons location
+#relativeaddonpath="../../../addons"  # normal oF Project->addons location
+
+##########################################################################################
+####### ADD YOUR ADDONS AT THE BOTTOM OF THE SCRIPT. SCROLL-DOWN ;D! Line >190 ###########
+##########################################################################################
+echo "Global Addons Path: $relativeaddonpath"
 echo "----------------------------------"
 
 # Check if Git's installed (yet to be tested if Git's not installed)
@@ -34,16 +49,8 @@ then
     echo "----------------------------------"
     exit 1
 fi
-
 # Get script directory (needed to run the script from any location!)
 scriptdirectory=$(dirname $0)
-
-
-# Global Variables
-relativeaddonpath="../../addons"
-#relativeaddonpath="../../../addons" # normal oF Project->addons location
-echo "Global Addons Path: $relativeaddonpath"
-echo "----------------------------------"
 
 #-------------------------------------------------------------- GetAddon Function
 # Function to get an addon
@@ -61,22 +68,36 @@ sha="$4"
 # if a branch is not specified - Default to master
 if [ "$branch" == "" ]
 then
-	branch="master"	
+	branch=""
 fi
-
-
-
-
+if [ "$1" == "" ]
+then
+ 	echo "----------------------"
+	echo "FATAL ERROR! Parameter 1 - 'Addon Folder Name' No specified!"
+	echo "Example usage: 'GetAddon \"ofxAddonScript\" \"https://github.com/danoli3/ofxAddonScript.git\"' "
+	echo "----------------------"
+	exit;
+fi
+if [ "$2" == "" ]
+then
+ 	echo "----------------------"
+	echo "FATAL ERROR! Parameter 2 - 'Github address' not specified"
+	echo "Example usage: 'GetAddon \"ofxAddonScript\" \"https://github.com/danoli3/ofxAddonScript.git\"' "
+	echo "----------------------"
+	exit;
+fi
 echo "========================"
 echo "Name:    $1"
 echo "Origin:  $2"
+if [ "$branch" != "" ]
+then
 echo "Branch:  $branch"
+fi
 
 if [ "$sha" != "" ]
 then
 	echo "SHA:     $sha"
 fi
-
 echo "------------------------"
 # Check the addon location
 if [ -d $addonsdirectory ]
@@ -91,8 +112,14 @@ then
     	echo "Addon directory already exists! '$1'!"
     	echo "------------------------"
 #    	echo "Verbose: Addon Full Path: \n $addondirectory" # verbose
-		echo "Setting branch to: $branch"
-		git checkout $branch
+		if [ "$branch" == "" ]
+		then
+			branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+			echo "Current branch is set to: $branch"
+		else
+			echo "Setting branch to: $branch"
+			git checkout $branch
+		fi
 		echo "------------------------"
     	echo "Now attempting update on $branch..."
    		git pull $2
@@ -102,7 +129,6 @@ then
 			echo "------------------------"
 			echo "Checking out SHA commit: $sha"
 			git checkout $sha
-			git status
 			echo "------------------------"
 		fi
    		echo "------------------------"
@@ -145,7 +171,27 @@ cd $scriptdirectory
 echo "========================"
 }
 
+##----------------------------- Example Script Information -------------------------------
+#########################################################################################
+# GetAddon Function to get an addon
+# Param1: Addon folder name
+# Param2: Github address
+# Param3: Branch
+# Param4: SHA commit
+#
+# Example Usage:
+## Normal way using two parameters to master and latest commit
+# GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git"  
+## Advanced way using 
+# GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git" "master" 
+## Advanced way using a specific SHA commit code (only use if you want a repo set to a specific commit).
+# GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git" "master" "78fd6f27cf82743644f0c12f926ae053a42a7aa3"
+#########################################################################################
 ##------------------------------- MODIFY BELOW HERE!!! ----------------------------------
 
-# Get the addons
-GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git" "master"
+###### --- Get following Addons --- Add your addons below! ;D! -- ######
+
+GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git"
+
+
+
