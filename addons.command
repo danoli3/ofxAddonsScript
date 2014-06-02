@@ -22,44 +22,83 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-echo "ofxAddonScript v1.0 (OSX Edition)."
+echo "----------------------------------"
+echo "ofxAddonScript v1.1 (OSX Edition)."
+echo "----------------------------------"
 
 # Check if Git's installed (yet to be tested if Git's not installed)
 if test "$(git --version 2>&1 | echo)" = "\n"
 then
-    echo "Git not installed."
+	echo "----------------------------------"
+    echo "FATAL ERROR: Git not installed. Script terminating..."
+    echo "----------------------------------"
     exit 1
 fi
 
-# Get script directory
+# Get script directory (needed to run the script from any location!)
 scriptdirectory=$(dirname $0)
 
+
+# Global Variables
+relativeaddonpath="../../addons"
+#relativeaddonpath="../../../addons" # normal oF Project->addons location
+echo "Global Addons Path: $relativeaddonpath"
+echo "----------------------------------"
+
+#-------------------------------------------------------------- GetAddon Function
 # Function to get an addon
 # Param1: Addon folder name
 # Param2: Github address
 GetAddon(){
 
 # NOTE: Change the following string if the addons folder is not two levels up from the directory of this script.
-addondirectory="$scriptdirectory/../../addons/"
-
+addonsdirectory="$scriptdirectory/$relativeaddonpath"
+echo "========================"
+echo "Checking Repo: $1 \nOrigin:        $2"
+echo "------------------------"
 # Check the addon location
-if [ -d $addondirectory ]
+if [ -d $addonsdirectory ]
 then
-
-    # Update if the directory exists
-    cd "$addondirectory/$1/"
-    echo "$addondirectory/$1/ exists.\nAttempting update on Master..."
-    git pull $2
-    echo "Update completed."
+	echo "openFrameworks Addon Directory Found!"
+	echo "------------------------"
+	addondirectory="$addonsdirectory/$1/"
+	if [ -d $addondirectory ]
+	then
+    	# Update if the directory exists
+    	cd "$addondirectory"
+    	echo "Addon directory already exists! '$1'!"
+    	echo "------------------------"
+#    	echo "Verbose: Addon Full Path: \n $addondirectory" # verbose
+    	echo "Now attempting update on Master..."
+   		git pull $2
+   		echo "------------------------"
+    	echo "$1 successfully updated"  #assuming git pull does not fail actually...
+    else
+    	# Clone if the directory doesn't exist
+   	 	echo "$1 does not exist in the addons directory."
+#  	 	echo "$relativeaddonpath/$relativeaddonpath" # verbose
+    	cd "$addonsdirectory"
+	    echo "Checking out $1 into $relativeaddonpath/$1"
+    	echo "------------------------"
+    	git clone $2 $1
+    	echo "------------------------"
+    	echo "$1 cloned successfully!"
+    	echo "------------------------"
+    fi
 else
-
-    # Clone if the directory doesn't exist
-    echo "$addondirectory does not exist.\nChecking out..."
-    cd "$addondirectory"
-    git clone $2
-    echo "Check out completed."
+    # Addons Folder not in location
+    echo "------------------------"
+    echo "ERROR! Addons directory not found at: $relativeaddonpath"
+#   echo "Verbose: Addons Full Path: \n $addonsdirectory" # verbose
+    echo "------------------------"
 fi
+
+# Reset environment location back to script directory.
+cd $scriptdirectory
+echo "========================"
 }
+
+##------------------------------- MODIFY BELOW HERE!!! ----------------------------------
 
 # Get the addons
 GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git"
