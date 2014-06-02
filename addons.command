@@ -49,12 +49,34 @@ echo "----------------------------------"
 # Function to get an addon
 # Param1: Addon folder name
 # Param2: Github address
+# Param3: Branch
+# Param4: SHA commit
 GetAddon(){
 
 # NOTE: Change the following string if the addons folder is not two levels up from the directory of this script.
 addonsdirectory="$scriptdirectory/$relativeaddonpath"
+branch="$3"
+sha="$4"
+
+# if a branch is not specified - Default to master
+if [ "$branch" == "" ]
+then
+	branch="master"	
+fi
+
+
+
+
 echo "========================"
-echo "Checking Repo: $1 \nOrigin:        $2"
+echo "Name:    $1"
+echo "Origin:  $2"
+echo "Branch:  $branch"
+
+if [ "$sha" != "" ]
+then
+	echo "SHA:     $sha"
+fi
+
 echo "------------------------"
 # Check the addon location
 if [ -d $addonsdirectory ]
@@ -69,8 +91,20 @@ then
     	echo "Addon directory already exists! '$1'!"
     	echo "------------------------"
 #    	echo "Verbose: Addon Full Path: \n $addondirectory" # verbose
-    	echo "Now attempting update on Master..."
+		echo "Setting branch to: $branch"
+		git checkout $branch
+		echo "------------------------"
+    	echo "Now attempting update on $branch..."
    		git pull $2
+   		# checkout a particular SHA commit
+   		if [ "$sha" != "" ]
+		then
+			echo "------------------------"
+			echo "Checking out SHA commit: $sha"
+			git checkout $sha
+			git status
+			echo "------------------------"
+		fi
    		echo "------------------------"
     	echo "$1 successfully updated"  #assuming git pull does not fail actually...
     else
@@ -84,6 +118,19 @@ then
     	echo "------------------------"
     	echo "$1 cloned successfully!"
     	echo "------------------------"
+    	echo "Setting branch to: $branch"
+		git checkout $branch
+		echo "------------------------"
+    	echo "Now attempting update on $branch..."
+   		git pull $2
+   		if [ "$sha" != "" ]
+		then
+			echo "------------------------"
+			echo "Checking out SHA commit: $sha"
+			git checkout $sha
+			git status
+			echo "------------------------"
+		fi
     fi
 else
     # Addons Folder not in location
@@ -101,4 +148,4 @@ echo "========================"
 ##------------------------------- MODIFY BELOW HERE!!! ----------------------------------
 
 # Get the addons
-GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git"
+GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git" "master"
