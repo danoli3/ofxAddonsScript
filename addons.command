@@ -144,6 +144,7 @@ then
     	echo "------------------------"
     	echo "$1 cloned successfully!"
     	echo "------------------------"
+    	cd "$addondirectory"
     	echo "Setting branch to: $branch"
 		git checkout $branch
 		echo "------------------------"
