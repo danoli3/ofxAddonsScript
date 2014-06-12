@@ -23,7 +23,7 @@
 # SOFTWARE.
 
 echo "----------------------------------"
-echo "ofxAddonScript v1.2 (OSX Edition)."
+echo "ofxAddonScript v1.21 (OSX Edition)."
 echo "----------------------------------"
 
 
@@ -32,8 +32,8 @@ echo "----------------------------------"
 # Variable: relativeaddonpath - Make this the relative location to addons folder
 # Default: "../../addons" however this very likely could be "../../../addons/"
 # ---------------------------------------------------------------------------------
-relativeaddonpath="../../addons"      # normal oF addons->addons location
-#relativeaddonpath="../../../addons"  # normal oF Project->addons location
+#relativeaddonpath="../../addons"      # normal oF addons->addons location
+relativeaddonpath="../../../addons"  # normal oF Project->addons location
 
 ##########################################################################################
 ####### ADD YOUR ADDONS AT THE BOTTOM OF THE SCRIPT. SCROLL-DOWN ;D! Line >190 ###########
@@ -56,14 +56,12 @@ scriptdirectory=$(dirname $0)
 # Function to get an addon
 # Param1: Addon folder name
 # Param2: Github address
-# Param3: Branch
-# Param4: SHA commit
+# Param3: Branch or SHA commit
 GetAddon(){
 
 # NOTE: Change the following string if the addons folder is not two levels up from the directory of this script.
 addonsdirectory="$scriptdirectory/$relativeaddonpath"
 branch="$3"
-sha="$4"
 
 # if a branch is not specified - Default to master
 if [ "$branch" == "" ]
@@ -91,13 +89,9 @@ echo "Name:    $1"
 echo "Origin:  $2"
 if [ "$branch" != "" ]
 then
-echo "Branch:  $branch"
+echo "Branch/SHA:  $branch"
 fi
 
-if [ "$sha" != "" ]
-then
-	echo "SHA:     $sha"
-fi
 echo "------------------------"
 # Check the addon location
 if [ -d $addonsdirectory ]
@@ -117,20 +111,13 @@ then
 			branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 			echo "Current branch is set to: $branch"
 		else
-			echo "Setting branch to: $branch"
+			echo "Setting branch/commit to: $branch"
+			# checkout a particular branch or SHA commit
 			git checkout $branch
 		fi
 		echo "------------------------"
     	echo "Now attempting update on $branch..."
-   		git pull $2
-   		# checkout a particular SHA commit
-   		if [ "$sha" != "" ]
-		then
-			echo "------------------------"
-			echo "Checking out SHA commit: $sha"
-			git checkout $sha
-			echo "------------------------"
-		fi
+   		git pull
    		echo "------------------------"
     	echo "$1 successfully updated"  #assuming git pull does not fail actually...
     else
@@ -145,19 +132,11 @@ then
     	echo "$1 cloned successfully!"
     	echo "------------------------"
     	cd "$addondirectory"
-    	echo "Setting branch to: $branch"
+    	echo "Setting branch/commit to: $branch"
 		git checkout $branch
 		echo "------------------------"
     	echo "Now attempting update on $branch..."
-   		git pull $2
-   		if [ "$sha" != "" ]
-		then
-			echo "------------------------"
-			echo "Checking out SHA commit: $sha"
-			git checkout $sha
-			git status
-			echo "------------------------"
-		fi
+   		git pull
     fi
 else
     # Addons Folder not in location
@@ -177,8 +156,7 @@ echo "========================"
 # GetAddon Function to get an addon
 # Param1: Addon folder name
 # Param2: Github address
-# Param3: Branch
-# Param4: SHA commit
+# Param3: Branch or SHA commit 
 #
 # Example Usage:
 ## Normal way using two parameters to master and latest commit
@@ -186,7 +164,7 @@ echo "========================"
 ## Advanced way using 
 # GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git" "master" 
 ## Advanced way using a specific SHA commit code (only use if you want a repo set to a specific commit).
-# GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git" "master" "78fd6f27cf82743644f0c12f926ae053a42a7aa3"
+# GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git" "78fd6f27cf82743644f0c12f926ae053a42a7aa3"
 #########################################################################################
 ##------------------------------- MODIFY BELOW HERE!!! ----------------------------------
 

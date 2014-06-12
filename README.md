@@ -3,7 +3,7 @@ ofxAddonScript
 
 OSX Bash command script to get specified openFrameworks addons
 
-Version 1.2 
+Version 1.21
 
  - Supports custom folder names
  - Supports customised git remote addresses
@@ -37,7 +37,7 @@ GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git" "maste
 Advanced way using a specific SHA commit code (only use if you want a repo set to a specific commit).
 
 ```
-GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git" "master" "78fd6f27cf82743644f0c12f926ae053a42a7aa3"
+GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git" "78fd6f27cf82743644f0c12f926ae053a42a7aa3"
 ```
 -----------------------------------------------
 
@@ -46,7 +46,6 @@ GetAddon Function Parameters
 
 - Param1: Addon folder name
 - Param2: Github address
-- Param3: Branch
-- Param4: SHA commit
+- Param3: Branch / SHA Commit
 
 --------------------------------------------
