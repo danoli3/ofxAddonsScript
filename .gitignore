@@ -1,0 +1,38 @@
+; ignore tools
+bower_components
+node_modules
+
+; ignore assets
+tests/assets
+tests/libraries
+
+#; ignore built files
+#css
+#templates
+#libraries
+#assets
+
+; ignore hidden files
+.sass-cache
+
+
+.DS_Store
+*~
+
+*.pbxuser
+*.perspective
+*.perspectivev3
+*.xccheckout
+
+*.mode1v3
+*.mode2v3
+
+*.app
+*.apk
+
+xcuserdata/
+example/bin/*
+
+example/ofApp.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+
+*.xcscheme
