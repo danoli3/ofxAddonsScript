@@ -23,7 +23,7 @@
 # SOFTWARE.
 
 echo "----------------------------------"
-echo "ofxAddonScript v1.21 (OSX Edition)."
+echo "ofxAddonsScript v1.22 (OSX Edition)."
 echo "----------------------------------"
 
 
@@ -160,18 +160,17 @@ echo "========================"
 #
 # Example Usage:
 ## Normal way using two parameters to master and latest commit
-# GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git"  
+# GetAddon "ofxAddonsScript" "https://github.com/danoli3/ofxAddonsScript.git"  
 ## Advanced way using 
-# GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git" "master" 
+# GetAddon "ofxAddonsScript" "https://github.com/danoli3/ofxAddonsScript.git" "master" 
 ## Advanced way using a specific SHA commit code (only use if you want a repo set to a specific commit).
-# GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git" "78fd6f27cf82743644f0c12f926ae053a42a7aa3"
+# GetAddon "ofxAddonsScript" "https://github.com/danoli3/ofxAddonsScript.git" "78fd6f27cf82743644f0c12f926ae053a42a7aa3"
 #########################################################################################
 ##------------------------------- MODIFY BELOW HERE!!! ----------------------------------
 
 ###### --- Get following Addons --- Add your addons below! ;D! -- ######
 
-GetAddon "ofxCv" "https://github.com/kylemcdonald/ofxCv.git"
-GetAddon "ofxFaceTracker" "https://github.com/kylemcdonald/ofxFaceTracker.git"
+GetAddon "ofxAddonsScript" "https://github.com/danoli3/ofxAddonsScript.git"
 
 
 

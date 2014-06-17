@@ -1,9 +1,14 @@
-ofxAddonScript
+ofxAddonsScript
 ==============
 
-OSX Bash command script to get specified openFrameworks addons
+openFrameworks Addon for downloading ofxAddons or git repo's defined in script.
 
-Version 1.21
+Screenshot:
+
+![Screenshot](https://github.com/danoli3/ofxAddonsScript/raw/master/ofxaddons_thumbnail.png)
+
+
+Version 1.22
 
  - Supports custom folder names
  - Supports customised git remote addresses
@@ -15,7 +20,7 @@ How to use:
 --------------------------
 --------------------------------------------
 
-By placing the `addons.command` in a project directory or addon directory you can easily specify addons to download automatically by getting the user to run the command.
+By placing the `ofxAddonsScript.command` in a project directory or addon directory you can easily specify addons to download automatically by getting the user to run the command.
 
 --------------------------------------------
 Example usage:
@@ -25,19 +30,19 @@ Example usage:
 Normal way using two parameters to master and latest commit
 	
 ```
-GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git"  
+GetAddon "ofxAddonsScript" "https://github.com/danoli3/ofxAddonsScript.git"  
 ```
 
 Advanced way using
 
 ``` 
-GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git" "master" 
+GetAddon "ofxAddonsScript" "https://github.com/danoli3/ofxAddonsScript.git" "master" 
 ```
 
 Advanced way using a specific SHA commit code (only use if you want a repo set to a specific commit).
 
 ```
-GetAddon "ofxAddonScript" "https://github.com/danoli3/ofxAddonScript.git" "78fd6f27cf82743644f0c12f926ae053a42a7aa3"
+GetAddon "ofxAddonsScript" "https://github.com/danoli3/ofxAddonsScript.git" "78fd6f27cf82743644f0c12f926ae053a42a7aa3"
 ```
 -----------------------------------------------
 
